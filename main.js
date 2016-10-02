@@ -32,11 +32,17 @@ client.on('message', msg => {
     debug(err)
   }
 
+  // Generate a random fact and send it as a message
   if (msgArray[1] === 'fact') {
     // Generate a fact and send it to a channel
     fact.genFact(function (fact) {
       msg.channel.sendMessage(fact)
     })
+  }
+
+  // Roll a number between 1 and 100
+  if (msgArray[1] === 'roll') {
+    msg.channel.sendMessage(Math.round(Math.random() * 100))
   }
 
   if (msgArray[1] === 'say') {
