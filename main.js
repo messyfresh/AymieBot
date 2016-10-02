@@ -1,32 +1,9 @@
 var Discord = require('discord.js')
 var client = new Discord.Client()
-var conf = require('../conf/conf.json')
-var debug = require('debug')('defusebot:bot')
-// var youtubeStream = require('youtube-audio-stream')
-var TextToSpeechV1 = require('watson-developer-cloud/text-to-speech/v1')
-var fs = require('fs')
-var spawn = require('child_process').spawn
-
-var tts = new TextToSpeechV1({
-  username: conf.watson.username,
-  password: conf.watson.password
-})
-
-var ebiInsults = [
-  'Have you fallen off a mountain today?',
-  'Did you get gold dps yet?',
-  'Have you missed an LB today?',
-  'Don\'t forget to change your batteries!',
-  'WORDS WORDS WORDS!',
-  'Is that like a trebushet?  Because you know, it\'s trebuchet.',
-  'Wow, at least you\'re saying more than just "Look!"',
-  'Do they have that at Chili\'s?',
-  'Let me guess, you\'re really AFK...'
-]
-
-function randomInt (low, high) {
-  Math.floor(Math.random() * (high - low) + low)
-}
+var conf = require('./conf/conf.json')
+var debug = require('debug')('aymiebot:bot')
+var con = require('./lib/constants')
+var util = require('./lib/util')
 
 client.on('ready', () => {
 })
@@ -35,8 +12,9 @@ client.on('message', msg => {
   var channel = msg.member.voiceChannel
 
   if (msg.author.username === 'Ebisu') {
-    var insultNum = randomInt(0, ebiInsults.length)
-    msg.reply(ebiInsults[insultNum])
+    util.randomInt(0, con.ebiInsults.length, function (result) {
+      msg.reply(con.ebiInsults[result])
+    })
   }
 
   // Set the prefix
@@ -48,7 +26,6 @@ client.on('message', msg => {
   // Split msg into array
   try {
     var msgArray = msg.content.split(' ')
-    // debug(msgArray)
   } catch (err) {
     debug(err)
   }
@@ -75,52 +52,41 @@ client.on('message', msg => {
   }
 
   if (msgArray[1] === 'say') {
-    var textToConvert = []
+    // Join Voice Channel
+    channel.join()
+      .then(function (connection) {
+        // Initialize empty array to store voice string
+        var textToConvert = []
+        for (var i = 0; i < msgArray.length; i++) {
+          if (i > 1) {
+            textToConvert.push(msgArray[i])
+          }
+          if (i === msgArray.length - 1) {
+            var textToConvertString = textToConvert.join(' ')
+            debug(textToConvertString)
 
-    for (var i = 0; i < msgArray.length; i++) {
-      if (i > 1) {
-        textToConvert.push(msgArray[i])
-      }
-      if (i === msgArray.length - 1) {
-        var textToConvertString = textToConvert.join(' ')
-        console.log(textToConvertString)
-      }
-    }
+            util.genVoice(textToConvertString, function (vStream) {
+              // Start playing returned voice stream
+              var intent = connection.playStream(vStream, {volume: 0.5})
+
+              // Debug to print when voice file is playing
+              intent.on('start', function () {
+                debug('Playing Voice File')
+              })
+
+              intent.on('end', function () {
+                debug('Finished Playing Voice File')
+              })
+            })
+          }
+        }
+      })
   }
 
   if (msgArray[1] === 'summon') {
     channel.join()
       .then(connection => {
-        // Watson Test
-        var params = {
-          text: 'Hello everyone, I\'m Aymie, Spelled A. Y. M. I. E. Do you feel like you need a nap now?',
-          voice: 'en-US_AllisonVoice',
-          accept: 'audio/wav'
-        }
-
-        var voiceStream = tts.synthesize(params).pipe(fs.createWriteStream('output.wav'))
-        voiceStream.on('finish', function () {
-          var concat = spawn('ffmpeg', ['-i', 'concat:output.wav|silence.wav', '-c', 'copy', 'out.wav'])
-
-          concat.on('exit', function (err) {
-            console.log('finished concating files')
-            if (err) console.log(err)
-            else {
-              var vStream = fs.createReadStream('out.wav')
-              var intent = connection.playStream(vStream, {volume: 0.5})
-              intent.on('start', function () {
-                console.log('playing file')
-              })
-              intent.on('end', function () {
-                console.log('finished playing file, deleting now')
-                fs.unlink('out.wav')
-              })
-            }
-          })
-          // connection.playStream(youtubeStream('https://www.youtube.com/watch?v=sS76eS34Y0c', {filter: 'audioonly', volume: '0.1'}));
-        })
-
-        return connection
+        // TODO Fix this section
       })
   }
 
@@ -132,18 +98,10 @@ client.on('message', msg => {
   }
 
   if (msgArray[1] === 'test') {
+    // TODO does not work, fix it
     var connection = client.connection
-    var params = {
-      text: 'Hello Everyone, I\'m Defuse-Bot',
-      voice: 'en-US_AllisonVoice',
-      accept: 'audio/wav'
-    }
-    var voiceStream = tts.synthesize(params)
-    connection.playStream(voiceStream)
+    debug('Connected to ' + connection.channel)
   }
 })
 
 client.login(conf.discord.bot.token)
-
-// Play youtube stream on channel
-// connection.playStream(youtubeStream('https://www.youtube.com/watch?v=' + msgArray[2]), {filter: 'audioonly', volume: '0.1'});
