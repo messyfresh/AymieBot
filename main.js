@@ -4,6 +4,8 @@ var conf = require('./conf/conf.json')
 var debug = require('debug')('aymiebot:bot')
 var con = require('./lib/constants')
 var util = require('./lib/util')
+var voice = require('./lib/voice')
+var fact = require('./lib/fact')
 
 client.on('ready', () => {
 })
@@ -30,25 +32,11 @@ client.on('message', msg => {
     debug(err)
   }
 
-  if (msgArray[1] === 'messy') {
-    msg.channel.sendMessage('is slow!')
-    msg.channel.sendMessage(':stuck_out_tongue:')
-  }
-
-  if (msgArray[1] === 'rem') {
-    msg.channel.sendMessage('is in charge!')
-  }
-
-  if (msgArray[1] === 'capt') {
-    msg.channel.sendMessage('is delusional!')
-  }
-
-  if (msgArray[1] === 'ping') {
-    msg.channel.sendMessage('wong!')
-  }
-
-  if (msgArray[1] === 'dragon') {
-    msg.channel.sendMessage('SHHH, It\'s sleeping over there')
+  if (msgArray[1] === 'fact') {
+    // Generate a fact and send it to a channel
+    fact.genFact(function (fact) {
+      msg.channel.sendMessage(fact)
+    })
   }
 
   if (msgArray[1] === 'say') {
@@ -57,15 +45,21 @@ client.on('message', msg => {
       .then(function (connection) {
         // Initialize empty array to store voice string
         var textToConvert = []
+
+        // Iterate thru msgArray and push what needs to be said to the textToConvert Array
         for (var i = 0; i < msgArray.length; i++) {
           if (i > 1) {
             textToConvert.push(msgArray[i])
           }
+
+          // Check if its the end of the msgArray and convert the array to a string
           if (i === msgArray.length - 1) {
+            // Converts to string, replacing commands with spaces
             var textToConvertString = textToConvert.join(' ')
             debug(textToConvertString)
 
-            util.genVoice(textToConvertString, function (vStream) {
+            // Generate Voice and Play it
+            voice.genVoice(textToConvertString, function (vStream) {
               // Start playing returned voice stream
               var intent = connection.playStream(vStream, {volume: 0.5})
 
@@ -74,6 +68,7 @@ client.on('message', msg => {
                 debug('Playing Voice File')
               })
 
+              // TODO delete generated .wav files
               intent.on('end', function () {
                 debug('Finished Playing Voice File')
               })
@@ -86,21 +81,18 @@ client.on('message', msg => {
   if (msgArray[1] === 'summon') {
     channel.join()
       .then(connection => {
-        // TODO Fix this section
+        // I'm  not sure if i will be keeping this command
       })
   }
 
   if (msgArray[1] === 'play') {
-    // Debug Voice Channel ID tied to message
-    // debug(msg.author.username + "\'s voice channel id is " + msg.member.voiceChannelID);
-    // TODO check to see if bot is already in channel
-
+    // TODO play audio from youtube video
   }
 
   if (msgArray[1] === 'test') {
     // TODO does not work, fix it
-    var connection = client.connection
-    debug('Connected to ' + connection.channel)
+    // var connection = client.connection
+    // debug('Connected to ' + connection.channel)
   }
 })
 
