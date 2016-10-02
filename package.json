@@ -1,0 +1,38 @@
+{
+  "name": "defusebot",
+  "version": "0.0.1",
+  "description": "Discord chat bot with voice features",
+  "private": true,
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "cookie-parser": "^1.4.3",
+    "debug": "^2.2.0",
+    "discord.js": "^9.3.0",
+    "express": "^4.14.0",
+    "express-session": "^1.14.1",
+    "hbs": "^4.0.1",
+    "mongoose": "^4.6.1",
+    "morgan": "^1.7.0",
+    "passport": "^0.3.2",
+    "passport-discord": "^0.1.1",
+    "serve-favicon": "^2.3.0",
+    "underscore": "^1.8.3",
+    "watson-developer-cloud": "^2.4.6",
+    "youtube-audio-stream": "0.0.26"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./bin/www"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/messyfresh/DefuseBot.git"
+  },
+  "author": "Scott 'Messyfresh' Nix",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/messyfresh/DefuseBot/issues"
+  },
+  "homepage": "https://github.com/messyfresh/DefuseBot#readme"
+}

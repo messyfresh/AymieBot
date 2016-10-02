@@ -1,0 +1,31 @@
+Web Based
+
+Connect Steam Libraries and allow a random game to be chosen that everyone has
+
+Dice Roll!
+
+Give away system
+
+Game Apis
+- Overwatch
+
+User/Game playtime Tracking
+
+Music Bot - Spotify
+
+!db username then return a random response
+
+okilubb: i don't know what kind of control you have, but if you manage to enact a queue for items it will play,
+when someone tries to request when something is playing it should respond in chat with a
+"hold your sht, i'll get to it after xx other things i've been asked to do"   XD
+
+Ebisu Insults
+
+Have you fallen off a mountain today?
+Did you get gold dps yet?
+Have you missed an LB today?
+Don't forget to change your batteries!
+WORDS WORDS WORDS!
+Is that like a trebushet?  Because you know, it's trebuchet.
+Wow, at least you're saying more than just "Look!"
+Do they have that at Chili's?
