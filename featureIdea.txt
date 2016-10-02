@@ -2,8 +2,6 @@ Web Based
 
 Connect Steam Libraries and allow a random game to be chosen that everyone has
 
-Dice Roll!
-
 Give away system
 
 Game Apis
@@ -18,3 +16,5 @@ Music Bot - Spotify
 okilubb: i don't know what kind of control you have, but if you manage to enact a queue for items it will play,
 when someone tries to request when something is playing it should respond in chat with a
 "hold your sht, i'll get to it after xx other things i've been asked to do"   XD
+
+receive bot commands from a specific bot channel, except ebi insults
