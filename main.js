@@ -35,10 +35,10 @@ client.on('message', msg => {
   // Insult someone (using a mention)
   if (msgArray[1] === 'insult') {
     // Get Mention
-    var msgMentions = msg.mentions.users.array().join(' ')
+    var msgMentions = util.getFirstMention(msg)
     // Generate number between 0 and length of insult array and send the message
-    util.randomInt(0, insults.generic.length, function (result) {
-      msg.channel.sendMessage(msgMentions + ' ' + insults.generic[result])
+    insults.genInsult(insults.generic, msgMentions, function (result) {
+      msg.channel.sendMessage(result)
     })
   }
 
@@ -110,12 +110,6 @@ client.on('message', msg => {
 
   if (msgArray[1] === 'test') {
     // Test stuff here
-    // Get Mention
-    var msgMentions = msg.mentions.users.array().join(' ')
-    // Generate number between 0 and length of insult array and send the message
-    util.randomInt(0, insults.testInsult.length, function (result) {
-      msg.channel.sendMessage(insults.testInsult[result])
-    })
   }
 })
 
