@@ -109,9 +109,7 @@ client.on('message', msg => {
   }
 
   if (msgArray[1] === 'test') {
-    var msgMentions = msg.mentions.users.array().join(' ')
-    console.log(msgMentions)
-    msg.channel.sendMessage(msgMentions)
+
   }
 })
 
