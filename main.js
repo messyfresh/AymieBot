@@ -13,6 +13,7 @@ client.on('ready', () => {
 client.on('message', msg => {
   var channel = msg.member.voiceChannel
 
+  // Insult Ebisu if he says something into text chat
   if (msg.author.username === 'Ebisu') {
     util.randomInt(0, insults.ebi.length, function (result) {
       msg.reply(insults.ebi[result])
