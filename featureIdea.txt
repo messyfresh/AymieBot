@@ -1,5 +1,3 @@
-Web Based
-
 Connect Steam Libraries and allow a random game to be chosen that everyone has
 
 Give away system
