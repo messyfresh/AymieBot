@@ -65,7 +65,7 @@ client.on('message', msg => {
             debug(textToConvertString)
 
             // Generate Voice and Play it
-            voice.genVoice(textToConvertString, function (vStream) {
+            voice.genVoice(textToConvertString, function (vStream, outputFile, sayFile) {
               // Start playing returned voice stream
               var intent = connection.playStream(vStream, {volume: 0.5})
 
@@ -74,9 +74,11 @@ client.on('message', msg => {
                 debug('Playing Voice File')
               })
 
-              // TODO delete generated .wav files
               intent.on('end', function () {
                 debug('Finished Playing Voice File')
+
+                // Delete generated wav files
+                voice.rmOutput(outputFile, sayFile)
               })
             })
           }
