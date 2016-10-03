@@ -2,7 +2,7 @@ var Discord = require('discord.js')
 var client = new Discord.Client()
 var conf = require('./conf/conf.json')
 var debug = require('debug')('aymiebot:bot')
-var con = require('./lib/constants')
+var insults = require('./lib/insults')
 var util = require('./lib/util')
 var voice = require('./lib/voice')
 var fact = require('./lib/fact')
@@ -14,8 +14,8 @@ client.on('message', msg => {
   var channel = msg.member.voiceChannel
 
   if (msg.author.username === 'Ebisu') {
-    util.randomInt(0, con.ebiInsults.length, function (result) {
-      msg.reply(con.ebiInsults[result])
+    util.randomInt(0, insults.ebi.length, function (result) {
+      msg.reply(insults.ebi[result])
     })
   }
 
@@ -37,8 +37,8 @@ client.on('message', msg => {
     // Get Mention
     var msgMentions = msg.mentions.users.array().join(' ')
     // Generate number between 0 and length of insult array and send the message
-    util.randomInt(0, con.insults.length, function (result) {
-      msg.channel.sendMessage(msgMentions + ' ' + con.insults[result])
+    util.randomInt(0, insults.generic.length, function (result) {
+      msg.channel.sendMessage(msgMentions + ' ' + insults.generic[result])
     })
   }
 
@@ -109,7 +109,13 @@ client.on('message', msg => {
   }
 
   if (msgArray[1] === 'test') {
-
+    // Test stuff here
+    // Get Mention
+    var msgMentions = msg.mentions.users.array().join(' ')
+    // Generate number between 0 and length of insult array and send the message
+    util.randomInt(0, insults.testInsult.length, function (result) {
+      msg.channel.sendMessage(insults.testInsult[result])
+    })
   }
 })
 
