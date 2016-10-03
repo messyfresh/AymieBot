@@ -32,6 +32,16 @@ client.on('message', msg => {
     debug(err)
   }
 
+  // Insult someone (using a mention)
+  if (msgArray[1] === 'insult') {
+    // Get Mention
+    var msgMentions = msg.mentions.users.array().join(' ')
+    // Generate number between 0 and length of insult array and send the message
+    util.randomInt(0, con.insults.length, function (result) {
+      msg.channel.sendMessage(msgMentions + ' ' + con.insults[result])
+    })
+  }
+
   // Generate a random fact and send it as a message
   if (msgArray[1] === 'fact') {
     // Generate a fact and send it to a channel
@@ -74,6 +84,7 @@ client.on('message', msg => {
                 debug('Playing Voice File')
               })
 
+              // Deleted generated wav files when they are done playing
               intent.on('end', function () {
                 debug('Finished Playing Voice File')
 
@@ -98,9 +109,9 @@ client.on('message', msg => {
   }
 
   if (msgArray[1] === 'test') {
-    // TODO does not work, fix it
-    // var connection = client.connection
-    // debug('Connected to ' + connection.channel)
+    var msgMentions = msg.mentions.users.array().join(' ')
+    console.log(msgMentions)
+    msg.channel.sendMessage(msgMentions)
   }
 })
 
