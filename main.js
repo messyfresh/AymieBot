@@ -8,6 +8,7 @@ var voice = require('./lib/voice')
 var fact = require('./lib/fact')
 
 client.on('ready', () => {
+  // Test stuff here
 })
 
 client.on('message', msg => {
@@ -46,8 +47,14 @@ client.on('message', msg => {
   // Generate a random fact and send it as a message
   if (msgArray[1] === 'fact') {
     // Generate a fact and send it to a channel
+
+    if (msg.channel.name !== 'bottesting') {
+      msg.delete()
+    }
+
     fact.genFact(function (fact) {
-      msg.channel.sendMessage(fact)
+      // TODO make this a function, move it out to utils file, and call when needed
+      client.channels.find('name', 'bottesting').sendMessage(fact)
     })
   }
 
