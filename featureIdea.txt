@@ -18,3 +18,5 @@ when someone tries to request when something is playing it should respond in cha
 receive bot commands from a specific bot channel, except ebi insults
 
 skip command to skip songs in queue
+
+mock user if they try to pm her in funnies chat (You do realize I'm a bot and cant respond to pms right?)
