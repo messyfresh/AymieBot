@@ -119,6 +119,10 @@ client.on('message', msg => {
   if (msgArray[1] === 'test') {
     // Test stuff here
   }
+
+  if (msgArray[1] === 'help') {
+    msg.reply('My commands are "insult [username]", "fact", "roll", "say"')
+  }
 })
 
 client.login(conf.discord.bot.token)
