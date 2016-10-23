@@ -21,11 +21,8 @@ client.on('message', msg => {
     })
   }
 
-  // Set the prefix
-  var prefix = '!ab'
-
   // Stop if prefix isn't there
-  if (!msg.content.startsWith(prefix)) return
+  if (!msg.content.startsWith(conf.settings.msgPrefix)) return
 
   // Split msg into array
   try {
