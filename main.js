@@ -9,6 +9,7 @@ var fact = require('./lib/fact')
 
 client.on('ready', () => {
   // Test stuff here
+  debug('Connected to ' + client.guilds.array())
 })
 
 client.on('message', msg => {
@@ -31,6 +32,10 @@ client.on('message', msg => {
     debug(err)
   }
 
+  // Set different options in conf
+  if (msgArray[1] === 'set') {
+  }
+
   // Insult someone (using a mention)
   if (msgArray[1] === 'insult') {
     // Get Mention
@@ -45,13 +50,14 @@ client.on('message', msg => {
   if (msgArray[1] === 'fact') {
     // Generate a fact and send it to a channel
 
-    if (msg.channel.name !== 'bottesting') {
+    if (msg.channel.name !== conf.settings.defaultChannel) {
       msg.delete()
     }
 
     fact.genFact(function (fact) {
       // TODO make this a function, move it out to utils file, and call when needed
-      client.channels.find('name', 'bottesting').sendMessage(fact)
+      // client.channels.find('name', conf.settings.defaultChannel).sendMessage(fact)
+      msg.channel.sendMessage(fact)
     })
   }
 
@@ -61,6 +67,7 @@ client.on('message', msg => {
   }
 
   if (msgArray[1] === 'say') {
+    // TODO fix this so there isn't a 'pop' between the audio generated for TTS and the added silence to make the audio file over 1 sec
     // Join Voice Channel
     channel.join()
       .then(function (connection) {
@@ -99,13 +106,6 @@ client.on('message', msg => {
             })
           }
         }
-      })
-  }
-
-  if (msgArray[1] === 'summon') {
-    channel.join()
-      .then(connection => {
-        // I'm  not sure if i will be keeping this command
       })
   }
 
