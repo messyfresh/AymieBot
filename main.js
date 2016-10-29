@@ -16,11 +16,13 @@ client.on('message', msg => {
   var channel = msg.member.voiceChannel
 
   // Insult Ebisu if he says something into text chat
-  if (msg.author.username === 'Ebisu') {
-    util.randomInt(0, insults.ebi.length, function (result) {
-      msg.reply(insults.ebi[result])
-    })
-  }
+  // Commenting out b/c apparently Ebi's being whiney about it 10/25/2016
+  // Next 5 lines can be uncommented to reactivate function
+//  if (msg.author.username === 'Ebisu') {
+//    util.randomInt(0, insults.ebi.length, function (result) {
+//      msg.reply(insults.ebi[result])
+//    })
+//  }
 
   // Stop if prefix isn't there
   if (!msg.content.startsWith(conf.settings.msgPrefix)) return
