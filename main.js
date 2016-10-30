@@ -17,6 +17,13 @@ client.on('ready', () => {
 client.on('message', msg => {
   var channel = msg.member.voiceChannel
 
+  // Insult Ebisu if he says something into text chat
+  if (msg.author.username === 'Ebisu' && settings.autoInsultEnable === 'on') {
+    util.randomInt(0, insults.ebi.length, function (result) {
+      msg.reply(insults.ebi[result])
+    })
+  }
+
   // Stop if prefix isn't there
   if (!msg.content.startsWith(settings.msgPrefix)) return
 
@@ -29,10 +36,7 @@ client.on('message', msg => {
 
   // Set different options in conf
   if (msgArray[1] === 'set') {
-    /* Example to save settings
-    settings.test = 'test2'
-    settingsHelper.saveSettings(settings)
-    */
+    // Check what the command after 'set' is
     switch (msgArray[2].toLowerCase()) {
       // Auto Insult
       case 'autoinsult':
@@ -73,13 +77,14 @@ client.on('message', msg => {
   if (msgArray[1] === 'fact') {
     // Generate a fact and send it to a channel
 
-    if (msg.channel.name !== conf.settings.defaultChannel) {
-      msg.delete()
-    }
+    // TODO implement a default channel settings function to change this
+    // if (msg.channel.name !== settings.defaultChannel) {
+    //  msg.delete()
+    // }
 
     fact.genFact(function (fact) {
       // TODO make this a function, move it out to utils file, and call when needed
-      // client.channels.find('name', conf.settings.defaultChannel).sendMessage(fact)
+      // client.channels.find('name', settings.defaultChannel).sendMessage(fact)
       msg.channel.sendMessage(fact)
     })
   }
@@ -142,13 +147,6 @@ client.on('message', msg => {
 
   if (msgArray[1] === 'help') {
     msg.reply('My commands are "insult [username]", "fact", "roll", "say"')
-  }
-
-  // Insult Ebisu if he says something into text chat
-  if (msg.author.username === 'Ebisu' && settings.autoInsultEnable === 'on') {
-    util.randomInt(0, insults.ebi.length, function (result) {
-      msg.reply(insults.ebi[result])
-    })
   }
 })
 
