@@ -6,6 +6,8 @@ var insults = require('./lib/insults')
 var util = require('./lib/util')
 var voice = require('./lib/voice')
 var fact = require('./lib/fact')
+var settingsHelper = require('./lib/settings')
+var settings = require('./settings.json')
 
 client.on('ready', () => {
   // Test stuff here
@@ -15,17 +17,8 @@ client.on('ready', () => {
 client.on('message', msg => {
   var channel = msg.member.voiceChannel
 
-  // Insult Ebisu if he says something into text chat
-  // Commenting out b/c apparently Ebi's being whiney about it 10/25/2016
-  // Next 5 lines can be uncommented to reactivate function
-//  if (msg.author.username === 'Ebisu') {
-//    util.randomInt(0, insults.ebi.length, function (result) {
-//      msg.reply(insults.ebi[result])
-//    })
-//  }
-
   // Stop if prefix isn't there
-  if (!msg.content.startsWith(conf.settings.msgPrefix)) return
+  if (!msg.content.startsWith(settings.msgPrefix)) return
 
   // Split msg into array
   try {
@@ -36,6 +29,34 @@ client.on('message', msg => {
 
   // Set different options in conf
   if (msgArray[1] === 'set') {
+    /* Example to save settings
+    settings.test = 'test2'
+    settingsHelper.saveSettings(settings)
+    */
+    switch (msgArray[2].toLowerCase()) {
+      // Auto Insult
+      case 'autoinsult':
+        switch (msgArray[3]) {
+          case 'off':
+            if (settings.autoInsultEnable === 'off') {
+              msg.channel.sendMessage('AutoInsult is ALREADY disabled, those were valuable CPU cycles I will NEVER get back.')
+            } else {
+              settings.autoInsultEnable = 'off'
+              settingsHelper.saveSettings(settings)
+              msg.channel.sendMessage('AutoInsult is now turned off. I guess someone is feeling nice today.')
+            }
+            break
+          case 'on':
+            if (settings.autoInsultEnable === 'on') {
+              msg.channel.sendMessage('AutoInsult is ALREADY enabled, those were valuable CPU cycles I will NEVER get back.')
+            } else {
+              settings.autoInsultEnable = 'on'
+              settingsHelper.saveSettings(settings)
+              msg.channel.sendMessage('AutoInsult is now turned on. May god have mercy on their soul.')
+            }
+            break
+        }
+    }
   }
 
   // Insult someone (using a mention)
@@ -121,6 +142,13 @@ client.on('message', msg => {
 
   if (msgArray[1] === 'help') {
     msg.reply('My commands are "insult [username]", "fact", "roll", "say"')
+  }
+
+  // Insult Ebisu if he says something into text chat
+  if (msg.author.username === 'Ebisu' && settings.autoInsultEnable === 'on') {
+    util.randomInt(0, insults.ebi.length, function (result) {
+      msg.reply(insults.ebi[result])
+    })
   }
 })
 
