@@ -1,12 +1,10 @@
-// Functions for voice commands
-
+// Helper functions for voice commands
+var debug = require('debug')('aymiebot:voiceHandlerHelper')
 var TextToSpeechV1 = require('watson-developer-cloud/text-to-speech/v1')
 var fs = require('fs')
 var spawn = require('child_process').spawn
-
-var debug = require('debug')('aymiebot:voice')
-var conf = require('../conf/conf.json')
-var util = require('./util')
+var conf = require('../../conf/conf.json')
+var commandHandlerHelpers = require('./commandHandlerHelpers')
 
 // Setup Text To Speech Engine
 var tts = new TextToSpeechV1({
@@ -22,7 +20,7 @@ function genVoice (textString, callback) {
     accept: 'audio/wav'
   }
   // Generate 5 digit ID for finished voice file
-  var voiceStreamId = util.randomFiveDigit()
+  var voiceStreamId = commandHandlerHelpers.randomFiveDigit()
 
   var outputFile = 'output' + voiceStreamId + '.wav'
 
@@ -32,7 +30,7 @@ function genVoice (textString, callback) {
   // Wait for voiceStream file to finish being written
   voiceStream.on('finish', function () {
     // Add 5 digit id to final .wav file
-    var sayFile = 'out' + util.randomFiveDigit() + '.wav'
+    var sayFile = 'out' + commandHandlerHelpers.randomFiveDigit() + '.wav'
     debug('Adding a second of silence to the end of ', sayFile)
 
     // Add an extra second of silence to end of Text to Speech file due to bug in discord.js

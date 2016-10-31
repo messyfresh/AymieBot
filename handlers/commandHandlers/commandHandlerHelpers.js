@@ -1,4 +1,4 @@
-// Helper functions
+// Non command specific helper functions
 
 // Generate a random integer between 2 numbers
 function randomInt (low, high, callback) {
@@ -18,17 +18,12 @@ function getFirstMention (msg) {
 
 // Get all mentions from a message and return them
 function genMentions (msg) {
-  var mentions = msg.mentions.users.array().join(' ')
-  return mentions
+  return msg.mentions.users.array().join(' ')
 }
 
-// Export
 module.exports = {
   randomInt: randomInt,
   randomFiveDigit: randomFiveDigit,
   getFirstMention: getFirstMention,
   genMentions: genMentions
 }
-
-// Example to play youtube audio
-// youtubeStream('https://www.youtube.com/watch?v=sS76eS34Y0c', {filter: 'audioonly', volume: '0.1'});

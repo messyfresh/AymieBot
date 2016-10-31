@@ -1,6 +1,5 @@
-// Insults and helpers
-var util = require('./util')
-
+// List of Insults
+// Ebisu specific Insults
 // Courtesy of okilubb
 var ebi = [
   'Have you fallen off a mountain today?',
@@ -52,22 +51,7 @@ var generic = [
   'I\'d agree with you, $mention, but then we\'d both be wrong.'
 ]
 
-// Generate an insult
-// TODO change arguments into a context so not all arguments are required to be passed
-function genInsult (insultList, mentions, callback) {
-  util.randomInt(0, insultList.length, function (result) {
-    var mentionedInsult = insultList[result].replace('$mention', mentions)
-    callback(mentionedInsult)
-  })
-}
-
-// Export all the things
-module.exports.ebi = ebi
-module.exports.generic = generic
-module.exports.genInsult = genInsult
-
 module.exports = {
   ebi: ebi,
-  generic: generic,
-  genInsult: genInsult
+  generic: generic
 }

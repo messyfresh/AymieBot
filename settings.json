@@ -1,6 +1,6 @@
 {
   "msgPrefix": "!ab",
   "defaultChannel": "general",
-  "autoInsultEnable": "off",
+  "autoInsultEnable": "on",
   "autoInsultUsers": ""
 }
