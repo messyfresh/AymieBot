@@ -12,7 +12,7 @@ function randomFiveDigit () {
 
 // Gets first mention from a message and return it
 function getFirstMention (msg) {
-  var mention = msg.mentions.users.array()
+  let mention = msg.mentions.users.array()
   return mention[0]
 }
 

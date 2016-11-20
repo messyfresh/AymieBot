@@ -1,15 +1,16 @@
 // Primary message handler file, links to all other command handlers from here
 
 // var debug = require('debug')('aymiebot:commandHandler')
-var settings = require('../settings.json')
-var helpers = require('./messageHandlerHelpers')
-var setHandler = require('./commandHandlers/setHandler')
-var factHandler = require('./commandHandlers/factHandler')
-var rollHandler = require('./commandHandlers/rollHandler')
-var insultHandler = require('./commandHandlers/insultHandler')
-var helpHandler = require('./commandHandlers/helpHandler')
-var voiceHandler = require('./commandHandlers/voiceHandler')
-var autoInsultHandler = require('./commandHandlers/autoInsultHandler')
+let settings = require('../settings.json')
+let helpers = require('./messageHandlerHelpers')
+let setHandler = require('./commandHandlers/setHandler')
+let factHandler = require('./commandHandlers/factHandler')
+let rollHandler = require('./commandHandlers/rollHandler')
+let insultHandler = require('./commandHandlers/insultHandler')
+let helpHandler = require('./commandHandlers/helpHandler')
+let voiceHandler = require('./commandHandlers/voiceHandler')
+let autoInsultHandler = require('./commandHandlers/autoInsultHandler')
+let redditHandler = require('./commandHandlers/redditHandler')
 
 // Primary Message Handler
 function handleMessage (msg) {
@@ -37,6 +38,9 @@ function handleMessage (msg) {
       break
     case 'roll':
       rollHandler.rollHandler(msg)
+      break
+    case 'showerthought':
+      redditHandler.showerThoughtHandler(msg)
       break
     case 'help':
       helpHandler.helpHandler(msg)
