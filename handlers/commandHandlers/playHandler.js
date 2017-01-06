@@ -1,6 +1,7 @@
 const debug = require('debug')('aymiebot:playHandler')
 const youtubeStream = require('youtube-audio-stream')
-const nyanUrl = 'https://www.youtube.com/watch?v=QH2-TGUlwu4'
+const youtubeUrl = 'https://www.youtube.com/watch?v='
+const nyanCode = 'QH2-TGUlwu4'
 
 function playHandler (msg) {
   debug(msg.msgArray)
@@ -10,7 +11,7 @@ function playHandler (msg) {
     channel.join().then((connection) => {
       switch (msg.msgArray[2]) {
         case 'nyan':
-          let nyanStream = youtubeStream(nyanUrl)
+          let nyanStream = youtubeStream(youtubeUrl + nyanCode)
           let intent = connection.playStream(nyanStream, {volume: 0.5})
           intent.on('start', () => {
             debug('Playing Youtube audio')

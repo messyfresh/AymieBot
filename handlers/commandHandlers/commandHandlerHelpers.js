@@ -1,4 +1,5 @@
 // Non command specific helper functions
+const debug = require('debug')()
 
 // Generate a random integer between 2 numbers
 function randomInt (low, high, callback) {

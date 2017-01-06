@@ -1,5 +1,5 @@
 // Generates an insult
-// var debug = require('debug')('aymiebot:insult')
+// let debug = require('debug')('aymiebot:insult')
 let commandHandlerHelper = require('./commandHandlerHelpers')
 let insults = require('../../constants/insultList')
 
