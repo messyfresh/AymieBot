@@ -1,27 +1,43 @@
 // Primary message handler file, links to all other command handlers from here
 
-// var debug = require('debug')('aymiebot:commandHandler')
-let settings = require('../settings.json')
-let helpers = require('./messageHandlerHelpers')
-let setHandler = require('./commandHandlers/setHandler')
-let factHandler = require('./commandHandlers/factHandler')
-let rollHandler = require('./commandHandlers/rollHandler')
-let insultHandler = require('./commandHandlers/insultHandler')
-let helpHandler = require('./commandHandlers/helpHandler')
-let voiceHandler = require('./commandHandlers/voiceHandler')
-let autoInsultHandler = require('./commandHandlers/autoInsultHandler')
-let redditHandler = require('./commandHandlers/redditHandler')
+const debug = require('debug')('aymiebot:commandHandler')
+const settings = require('../settings.json')
+const helpers = require('./messageHandlerHelpers')
+const setHandler = require('./commandHandlers/setHandler')
+const factHandler = require('./commandHandlers/factHandler')
+const rollHandler = require('./commandHandlers/rollHandler')
+const insultHandler = require('./commandHandlers/insultHandler')
+const helpHandler = require('./commandHandlers/helpHandler')
+const voiceHandler = require('./commandHandlers/voiceHandler')
+const playHandler = require('./commandHandlers/playHandler')
+const autoInsultHandler = require('./commandHandlers/autoInsultHandler')
+const redditHandler = require('./commandHandlers/redditHandler')
+const commandHandlerHelper = require('./commandHandlers/commandHandlerHelpers')
 
 // Primary Message Handler
 function handleMessage (msg) {
   // Check message to see if user needs to be insulted
   autoInsultHandler.autoInsultHandler(msg)
 
-  // Stop if prefix isn't there
-  if (!msg.content.startsWith(settings.msgPrefix)) return
+  // Stop if prefix isn't there or bot isn't mentioned first
+  try {
+    let firstMention = commandHandlerHelper.getFirstMention(msg)
+    let msgPrefix = msg.content.startsWith(settings.msgPrefix)
+    if (firstMention) {
+      debug('mention found, continuing')
+    } else if (!firstMention && msgPrefix) {
+      debug('"!ab" prefix found, continuing')
+    } else if (!firstMention && !msgPrefix) {
+      debug('not my command...  ignoring...')
+      return
+    }
+  } catch (err) {
+    debug(err)
+  }
 
   // Add array to msg object
   helpers.setMsgArray(msg)
+  debug(msg.msgArray)
 
   switch (msg.msgArray[1]) {
     case 'set':
@@ -41,6 +57,9 @@ function handleMessage (msg) {
       break
     case 'showerthought':
       redditHandler.showerThoughtHandler(msg)
+      break
+    case 'play':
+      playHandler.playHandler(msg)
       break
     case 'help':
       helpHandler.helpHandler(msg)
