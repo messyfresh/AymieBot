@@ -1,40 +1,40 @@
 // Helper functions for voice commands
-var debug = require('debug')('aymiebot:voiceHandlerHelper')
-var TextToSpeechV1 = require('watson-developer-cloud/text-to-speech/v1')
-var fs = require('fs')
-var spawn = require('child_process').spawn
-var conf = require('../../conf/conf.json')
-var commandHandlerHelpers = require('./commandHandlerHelpers')
+const debug = require('debug')('aymiebot:voiceHandlerHelper')
+const TextToSpeechV1 = require('watson-developer-cloud/text-to-speech/v1')
+const fs = require('fs')
+const spawn = require('child_process').spawn
+const conf = require('../../conf/conf.json')
+const commandHandlerHelpers = require('./commandHandlerHelpers')
 
 // Setup Text To Speech Engine
-var tts = new TextToSpeechV1({
+let tts = new TextToSpeechV1({
   username: conf.watson.username,
   password: conf.watson.password
 })
 
 function genVoice (textString, callback) {
   // Setup Hello Intro
-  var params = {
+  let params = {
     text: textString,
     voice: 'en-US_AllisonVoice',
     accept: 'audio/wav'
   }
   // Generate 5 digit ID for finished voice file
-  var voiceStreamId = commandHandlerHelpers.randomFiveDigit()
+  let voiceStreamId = commandHandlerHelpers.randomFiveDigit()
 
-  var outputFile = 'output' + voiceStreamId + '.wav'
+  let outputFile = 'output' + voiceStreamId + '.wav'
 
   // Stream response from Watson to a .wav file
-  var voiceStream = tts.synthesize(params).pipe(fs.createWriteStream(outputFile))
+  let voiceStream = tts.synthesize(params).pipe(fs.createWriteStream(outputFile))
 
   // Wait for voiceStream file to finish being written
   voiceStream.on('finish', function () {
     // Add 5 digit id to final .wav file
-    var sayFile = 'out' + commandHandlerHelpers.randomFiveDigit() + '.wav'
+    let sayFile = 'out' + commandHandlerHelpers.randomFiveDigit() + '.wav'
     debug('Adding a second of silence to the end of ', sayFile)
 
     // Add an extra second of silence to end of Text to Speech file due to bug in discord.js
-    var concat = spawn('ffmpeg', ['-i', 'concat:' + outputFile + '|silence.wav', '-c', 'copy', sayFile])
+    let concat = spawn('ffmpeg', ['-i', 'concat:' + outputFile + '|silence.wav', '-c', 'copy', sayFile])
 
     // Wait for concatenate operation to finish before playing file
     concat.on('exit', function (err) {

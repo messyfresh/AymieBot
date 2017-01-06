@@ -1,17 +1,17 @@
 // Voice handler
-var debug = require('debug')('aymiebot:voiceHandler')
-var voiceHandlerHelper = require('./voiceHandlerHelper')
+const debug = require('debug')('aymiebot:voiceHandler')
+const voiceHandlerHelper = require('./voiceHandlerHelper')
 
 function voiceHandler (msg) {
 // TODO fix this so there isn't a 'pop' between the audio generated for TTS and the added silence to make the audio file over 1 sec
 // Join Voice Channel
-  var channel = msg.member.voiceChannel
+  let channel = msg.member.voiceChannel
   channel.join()
     .then(function (connection) {
       // Initialize empty array to store voice string
-      var textToConvert = []
+      let textToConvert = []
       // Iterate thru msg.msgArray and push what needs to be said to the textToConvert Array
-      for (var i = 0; i < msg.msgArray.length; i++) {
+      for (let i = 0; i < msg.msgArray.length; i++) {
         if (i > 1) {
           textToConvert.push(msg.msgArray[i])
         }
@@ -19,13 +19,13 @@ function voiceHandler (msg) {
         // Check if its the end of the msg.msgArray and convert the array to a string
         if (i === msg.msgArray.length - 1) {
           // Converts to string, replacing commands with spaces
-          var textToConvertString = textToConvert.join(' ')
+          let textToConvertString = textToConvert.join(' ')
           debug(textToConvertString)
 
           // Generate Voice and Play it
           voiceHandlerHelper.genVoice(textToConvertString, function (vStream, outputFile, sayFile) {
             // Start playing returned voice stream
-            var intent = connection.playStream(vStream, {volume: 0.5})
+            let intent = connection.playStream(vStream, {volume: 0.5})
 
             // Debug to print when voice file is playing
             intent.on('start', function () {
