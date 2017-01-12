@@ -12,6 +12,7 @@ const voiceHandler = require('./commandHandlers/voiceHandler')
 const playHandler = require('./commandHandlers/playHandler')
 const autoInsultHandler = require('./commandHandlers/autoInsultHandler')
 const redditHandler = require('./commandHandlers/redditHandler')
+const smiteHandler = require('./commandHandlers/smiteHandler')
 const commandHandlerHelper = require('./commandHandlers/commandHandlerHelpers')
 
 // Primary Message Handler
@@ -37,7 +38,7 @@ function handleMessage (msg) {
 
   // Add array to msg object
   helpers.setMsgArray(msg)
-  debug(msg.msgArray)
+  debug('Message Array: ', msg.msgArray)
 
   switch (msg.msgArray[1]) {
     case 'set':
@@ -60,6 +61,10 @@ function handleMessage (msg) {
       break
     case 'play':
       playHandler.playHandler(msg)
+      break
+    case 'build':
+    case 'smite':
+      smiteHandler.smiteHandler(msg)
       break
     case 'help':
       helpHandler.helpHandler(msg)

@@ -1,7 +1,7 @@
 // Generates an insult
 // let debug = require('debug')('aymiebot:insult')
-let commandHandlerHelper = require('./commandHandlerHelpers')
-let insults = require('../../constants/insultList')
+const commandHandlerHelper = require('./commandHandlerHelpers')
+const insults = require('../../constants/insultList')
 
 // Insult someone (using a mention)
 function insultHandler (msg) {

@@ -21,6 +21,4 @@ function showerThoughtHandler (msg) {
   })
 }
 
-module.exports = {
-  showerThoughtHandler: showerThoughtHandler
-}
+module.exports.showerThoughtHandler = showerThoughtHandler

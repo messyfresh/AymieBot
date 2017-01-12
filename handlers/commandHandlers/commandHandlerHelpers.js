@@ -22,9 +22,7 @@ function genMentions (msg) {
   return msg.mentions.users.array().join(' ')
 }
 
-module.exports = {
-  randomInt: randomInt,
-  randomFiveDigit: randomFiveDigit,
-  getFirstMention: getFirstMention,
-  genMentions: genMentions
-}
+module.exports.randomInt = randomInt
+module.exports.randomFiveDigit = randomFiveDigit
+module.exports.getFirstMention = getFirstMention
+module.exports.genMentions = genMentions

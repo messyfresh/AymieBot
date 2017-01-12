@@ -12,6 +12,4 @@ function autoInsultHandler (msg) {
   }
 }
 
-module.exports = {
-  autoInsultHandler: autoInsultHandler
-}
+module.exports.autoInsultHandler = autoInsultHandler

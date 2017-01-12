@@ -4,7 +4,6 @@ const youtubeUrl = 'https://www.youtube.com/watch?v='
 const nyanCode = 'QH2-TGUlwu4'
 
 function playHandler (msg) {
-  debug(msg.msgArray)
   // Check if user is in a voice channel
   if (getVoiceChannel(msg) === true) {
     let channel = msg.member.voiceChannel
@@ -34,6 +33,4 @@ function getVoiceChannel (msg) {
   return !!msg.member.voiceChannel
 }
 
-module.exports = {
-  playHandler: playHandler
-}
+module.exports.playHandler = playHandler

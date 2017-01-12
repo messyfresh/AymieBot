@@ -1,7 +1,7 @@
 // Generate a random fact and send it as a message
 
-let debug = require('debug')('aymiebot:factHandler')
-let request = require('request')
+const debug = require('debug')('aymiebot:factHandler')
+const request = require('request')
 
 function factHandler (msg) {
   request('http://mentalfloss.com/api/1.0/views/amazing_facts.json?limit=1&display_id=xhr&bypass=1', (error, response, body) => {
