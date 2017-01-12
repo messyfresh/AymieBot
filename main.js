@@ -4,6 +4,8 @@ const conf = require('./conf/conf.json')
 const debug = require('debug')('aymiebot:bot')
 const messageHandler = require('./handlers/messageHandler')
 
+require('events').EventEmitter.prototype._maxListeners = 100
+
 client.on('ready', () => {
   debug('Connected to ' + client.guilds.array())
 })
