@@ -1,7 +1,7 @@
 // This file is called by commandHandler to change settings
-var debug = require('debug')('aymiebot:set')
-var fs = require('fs')
-var settings = require('../../settings.json')
+const debug = require('debug')('aymiebot:set')
+const fs = require('fs')
+let settings = require('../../settings.json')
 
 function setHandler (msg) {
 // Check what the command after 'set' is
