@@ -13,6 +13,7 @@ const playHandler = require('./commandHandlers/playHandler')
 const autoInsultHandler = require('./commandHandlers/autoInsultHandler')
 const redditHandler = require('./commandHandlers/redditHandler')
 const smiteHandler = require('./commandHandlers/smiteHandler')
+const testHandler = require('./commandHandlers/testHandler')
 const commandHandlerHelper = require('./commandHandlers/commandHandlerHelpers')
 
 // Primary Message Handler
@@ -68,6 +69,9 @@ function handleMessage (msg) {
       break
     case 'help':
       helpHandler.helpHandler(msg)
+      break
+    case 'test':
+      testHandler.testHandler(msg)
       break
   }
 }
