@@ -18,11 +18,11 @@ function getFirstMention (msg) {
 }
 
 // Get all mentions from a message and return them
-function genMentions (msg) {
-  return msg.mentions.users.array().join(' ')
+function getMentions (msg) {
+  return msg.mentions.users.array()
 }
 
 module.exports.randomInt = randomInt
 module.exports.randomFiveDigit = randomFiveDigit
 module.exports.getFirstMention = getFirstMention
-module.exports.genMentions = genMentions
+module.exports.getMentions = getMentions

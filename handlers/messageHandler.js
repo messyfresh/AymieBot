@@ -1,6 +1,6 @@
 // Primary message handler file, links to all other command handlers from here
 
-const debug = require('debug')('aymiebot:commandHandler')
+const debug = require('debug')('aymiebot:messageHandler')
 const settings = require('../settings.json')
 const helpers = require('./messageHandlerHelpers')
 const setHandler = require('./commandHandlers/setHandler')
@@ -14,10 +14,11 @@ const autoInsultHandler = require('./commandHandlers/autoInsultHandler')
 const redditHandler = require('./commandHandlers/redditHandler')
 const smiteHandler = require('./commandHandlers/smiteHandler')
 const testHandler = require('./commandHandlers/testHandler')
+const timeoutHandler = require('./commandHandlers/timeoutHandler')
 const commandHandlerHelper = require('./commandHandlers/commandHandlerHelpers')
 
 // Primary Message Handler
-function handleMessage (msg) {
+function handleMessage (msg, client) {
   // Check message to see if user needs to be insulted
   autoInsultHandler.autoInsultHandler(msg)
 
@@ -39,7 +40,6 @@ function handleMessage (msg) {
 
   // Add array to msg object
   helpers.setMsgArray(msg)
-  debug('Message Array: ', msg.msgArray)
 
   switch (msg.msgArray[1]) {
     case 'set':
@@ -67,11 +67,14 @@ function handleMessage (msg) {
     case 'smite':
       smiteHandler.smiteHandler(msg)
       break
-    case 'help':
-      helpHandler.helpHandler(msg)
-      break
     case 'test':
       testHandler.testHandler(msg)
+      break
+    case 'timeout':
+      timeoutHandler.timeoutHandler(msg, client)
+      break
+    default:
+      helpHandler.helpHandler(msg)
       break
   }
 }
