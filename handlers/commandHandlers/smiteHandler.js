@@ -24,9 +24,9 @@ function smiteHandler (msg) {
 
 function sendSmiteInfo (msg, info) {
   let message = '```Markdown\n' +
-`${info.gods} - ${info.class} 
-Items: ${info.item1}, ${info.item2}, ${info.item3}, ${info.item4}, ${info.item5}, ${info.item6}
-Sell Item 1 For This: ${info.sellitem1forthis}\n` +
+  `${info.gods} - ${info.class} 
+  Items: ${info.item1}, ${info.item2}, ${info.item3}, ${info.item4}, ${info.item5}, ${info.item6}
+  Sell Item 1 For This: ${info.sellitem1forthis}\n` +
       '```'
 
   msg.channel.sendMessage(message)

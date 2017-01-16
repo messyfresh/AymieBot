@@ -15,6 +15,7 @@ const redditHandler = require('./commandHandlers/redditHandler')
 const smiteHandler = require('./commandHandlers/smiteHandler')
 const testHandler = require('./commandHandlers/testHandler')
 const timeoutHandler = require('./commandHandlers/timeoutHandler')
+const weatherHandler = require('./commandHandlers/weatherHandler')
 const commandHandlerHelper = require('./commandHandlers/commandHandlerHelpers')
 
 // Primary Message Handler
@@ -72,6 +73,9 @@ function handleMessage (msg, client) {
       break
     case 'timeout':
       timeoutHandler.timeoutHandler(msg, client)
+      break
+    case 'weather':
+      weatherHandler.weatherHandler(msg)
       break
     default:
       helpHandler.helpHandler(msg)
