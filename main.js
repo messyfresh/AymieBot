@@ -1,3 +1,8 @@
+// PMX
+require('pmx').init({
+  http: true
+})
+
 const Discord = require('discord.js')
 const client = new Discord.Client()
 const conf = require('./conf/conf.json')
