@@ -19,3 +19,9 @@ client.on('message', msg => {
 })
 
 client.login(conf.discord.bot.token)
+  .then((result) => {
+    console.log('Login Result: ', result)
+  })
+  .catch(error => {
+    console.error(error)
+  })
