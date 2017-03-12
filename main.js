@@ -18,6 +18,10 @@ client.on('message', msg => {
   messageHandler(msg)
 })
 
+client.on('disconnect', () => {
+  process.exit()
+})
+
 client.login(conf.discord.bot.token)
   .then((result) => {
     console.log('Login Result: ', result)
