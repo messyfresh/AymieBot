@@ -2,8 +2,8 @@
 // var debug = require('debug')('aymiebot:rollHandler')
 
 function rollHandler (msg) {
-  var highNumber = msg.msgArray[2] || 100
-  var rollResult = Math.round(Math.random() * highNumber)
+  let highNumber = msg.msgArray[2] || 100
+  let rollResult = Math.round(Math.random() * highNumber)
   msg.channel.sendMessage(rollResult)
 }
 
