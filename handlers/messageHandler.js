@@ -10,7 +10,6 @@ const insultHandler = require('./commandHandlers/insultHandler')
 const helpHandler = require('./commandHandlers/helpHandler')
 const voiceHandler = require('./commandHandlers/voiceHandler')
 const playHandler = require('./commandHandlers/playHandler')
-const autoInsultHandler = require('./commandHandlers/autoInsultHandler')
 const redditHandler = require('./commandHandlers/redditHandler')
 const smiteHandler = require('./commandHandlers/smiteHandler')
 const testHandler = require('./commandHandlers/testHandler')
@@ -20,9 +19,6 @@ const commandHandlerHelper = require('./commandHandlers/commandHandlerHelpers')
 
 // Primary Message Handler
 function handleMessage (msg, client) {
-  // Check message to see if user needs to be insulted
-  autoInsultHandler.autoInsultHandler(msg)
-
   // Stop if prefix isn't there or bot isn't mentioned first
   try {
     let firstMention = commandHandlerHelper.getFirstMention(msg)
