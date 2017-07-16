@@ -1,27 +1,10 @@
 // List of Insults
 // Ebisu specific Insults
 // Courtesy of okilubb
-var ebi = [
-  'Have you fallen off a mountain today?',
-  'Did you get gold dps yet?',
-  'Have you missed an LB today?',
-  'Don\'t forget to change your batteries!',
-  'WORDS WORDS WORDS!',
-  'Is that like a trebushet?  Because you know, it\'s trebuchet.',
-  'Wow, at least you\'re saying more than just "Look!"',
-  'Do they have that at Chili\'s?',
-  'Let me guess, you\'re really AFK...',
-  'Remember that time you fell off of a mountain and lost all your stuff?',
-  'Congrats on getting that gold medal for damage! ... Oh wait ... Nevermind.',
-  'The department of SCIENCE! has denied your request for WORDS WORDS WORDS!',
-  'Make sure your batteries are charged.',
-  'What\'s new at Chili\'s?',
-  'Remember when you thought you were going to win Civ 6 and, by some miracle, you ended up losing? You might say it was an act of God. Have faith, it\'ll happen again.'
-]
 
 // Insults shamelessly stolen from http://www.thetoptens.com/best-insults/
 // Mention placeholder is $mention
-var generic = [
+let generic = [
   'Shut up $mention, you\'ll never be the man your mother is.',
   '$mention must have been born on a highway, because that\'s where most accidents happen.',
   '$mention\'s family tree is a cactus, because everybody on it is a prick.',
@@ -52,6 +35,5 @@ var generic = [
 ]
 
 module.exports = {
-  ebi: ebi,
   generic: generic
 }
