@@ -1,65 +1,54 @@
 // Helper functions for voice commands
 const debug = require('debug')('aymiebot:voiceHandlerHelper')
-const TextToSpeechV1 = require('watson-developer-cloud/text-to-speech/v1')
-const fs = require('fs')
-const spawn = require('child_process').spawn
+const Polly = require('polly-tts')
 const conf = require('../../conf/conf.json')
-const commandHandlerHelpers = require('./commandHandlerHelpers')
+const fs = require('fs')
+const stream = require('stream')
 
-// Setup Text To Speech Engine
-let tts = new TextToSpeechV1({
-  username: conf.watson.username,
-  password: conf.watson.password
+let polly = new Polly({
+  accessKeyId: conf.aws.polly.accessKeyID,
+  secretAccessKey: conf.aws.polly.secret
 })
 
-function genVoice (textString, callback) {
-  // Setup Hello Intro
-  let params = {
-    text: textString,
-    voice: 'en-US_AllisonVoice',
-    accept: 'audio/wav'
-  }
-  // Generate 5 digit ID for finished voice file
-  let voiceStreamId = commandHandlerHelpers.randomFiveDigit()
+function genVoiceStream (textString) {
 
-  let outputFile = 'output' + voiceStreamId + '.wav'
+  return new Promise((resolve, reject) => {
 
-  // Stream response from Watson to a .wav file
-  let voiceStream = tts.synthesize(params).pipe(fs.createWriteStream(outputFile))
+    const params = {
+      text: textString,
+      voiceId: 'Joanna'
+    }
 
-  // Wait for voiceStream file to finish being written
-  voiceStream.on('finish', function () {
-    // Add 5 digit id to final .wav file
-    let sayFile = 'out' + commandHandlerHelpers.randomFiveDigit() + '.wav'
-    debug('Adding a second of silence to the end of ', sayFile)
-
-    // Add an extra second of silence to end of Text to Speech file due to bug in discord.js
-    let concat = spawn('ffmpeg', ['-i', 'concat:' + outputFile + '|silence.wav', '-c', 'copy', sayFile])
-
-    // Wait for concatenate operation to finish before playing file
-    concat.on('exit', function (err) {
-      if (err) debug('Concat Error: ', err)
-      else {
-        // Create ReadStream from finished file
-        callback(fs.createReadStream(sayFile), outputFile, sayFile)
-      }
+    let voiceFile = fs.createWriteStream('polly-tts.mp3')
+    polly.textToSpeech( params, (err, audioStream) => {
+      if (err) reject(err)
+      audioStream.pipe(voiceFile)
+      resolve(voiceFile)
     })
+
+
   })
 }
 
-// Delete generated wav files
-function rmOutput (file1, file2) {
-  fs.unlink(file1, function (err) {
-    if (err) debug(err)
-    debug('Deleting ' + file1)
-  })
-  fs.unlink(file2, function (err) {
-    if (err) debug(err)
-    debug('Deleting ' + file2)
+function genTextString (msgArray) {
+  return new Promise ((resolve, reject) => {
+    // Init empty array
+    let textToConvert = []
+    // Iterate through msgArray and push what needs to be said to the textToConvert Array
+    for (let i = 0; i < msgArray.length; i++) {
+      if (i > 1) {
+        textToConvert.push(msgArray[i])
+      }
+
+      // Check if its the end of the msgArray and convert to string
+      if (i === msgArray.length - 1) {
+        // Resolve the promise with the text string
+        resolve(textToConvert.join(' '))
+      }
+
+    }
   })
 }
 
-module.exports = {
-  genVoice: genVoice,
-  rmOutput: rmOutput
-}
+module.exports.genVoiceStream = genVoiceStream
+module.exports.genTextString = genTextString

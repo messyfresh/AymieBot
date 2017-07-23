@@ -10,6 +10,7 @@
     "google-spreadsheet": "^2.0.3",
     "node-opus": "^0.2.2",
     "opusscript": "0.0.1",
+    "polly-tts": "^1.0.3",
     "request": "^2.75.0",
     "snoowrap": "^1.11.3",
     "uws": "^0.12.0",
